@@ -1,1 +1,23 @@
-<!DOCTYPE html><html><head><title>sooo_simple_webapp</title><style>body { display: flex; justify-content: center; align-items: center; height: 100vh; font-size: 4em; }</style></head><body>sooo_simple</body></html>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>sooo_simple_webapp</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 4em;
+        }
+    </style>
+    <!-- Include Alpine.js -->
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <!-- Alpine.js component -->
+    <div x-data="{ color: 'black' }" :style="{ color: color }" @click="color = color === 'black' ? 'red' : 'black'">
+        sooo_simple
+    </div>
+</body>
+</html>
