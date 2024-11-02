@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Project</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+</head>
+<body>
+    <div x-data="{ images: ['image1.jpg', 'image2.jpg', 'image3.jpg'], currentIndex: 0 }" 
+         @wheel="currentIndex = (currentIndex + ($event.deltaY > 0 ? 1 : -1) + images.length) % images.length">
+        <img :src="'/images/' + images[currentIndex]" alt="Scrolling Image" style="width: 100%;">
+        <p x-text="'Image ' + (currentIndex + 1) + ' of ' + images.length"></p>
+    </div>
+    <script src="/js/app.js"></script>
+</body>
+</html>

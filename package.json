@@ -1,14 +1,12 @@
 {
-  "name": "sooo_simple_webapp",
+  "name": "my-project",
   "version": "1.0.0",
-  "main": "index.js",
+  "description": "A basic template for Node.js, Express, HTML, CSS, and JavaScript projects",
+  "main": "server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node server.js"
   },
-  "author": "",
-  "license": "ISC",
-  "description": "",
   "dependencies": {
-    "firebase": "^11.0.1"
+    "express": "^4.18.2"
   }
 }
