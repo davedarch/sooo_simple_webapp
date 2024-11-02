@@ -16,7 +16,9 @@
 </head>
 <body>
     <!-- Alpine.js component -->
-    <div x-data="{ color: 'black' }" :style="{ color: color }" @click="color = color === 'black' ? 'red' : 'black'">
+    <div x-data="{ colors: ['black', 'red', 'blue', 'green', 'purple'], index: 0 }" 
+         :style="{ color: colors[index] }" 
+         @click="index = (index + 1) % colors.length">
         sooo_simple
     </div>
 </body>
