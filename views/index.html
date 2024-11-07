@@ -8,7 +8,7 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body>
-    <div x-data="{ images: ['image1.jpg', 'image2.jpg', 'image3.jpg'], currentIndex: 0 }" 
+    <div x-data="{ images: ['image1.png', 'image2.png', 'image3.png'], currentIndex: 0 }" 
          @wheel="currentIndex = (currentIndex + ($event.deltaY > 0 ? 1 : -1) + images.length) % images.length">
         <img :src="'/images/' + images[currentIndex]" alt="Scrolling Image" style="width: 100%;">
         <p x-text="'Image ' + (currentIndex + 1) + ' of ' + images.length"></p>
