@@ -1,3 +1,6 @@
+fetch_python_scripts.py
+scripts/
+
 # Logs
 logs
 *.log
