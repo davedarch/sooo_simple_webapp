@@ -8,11 +8,34 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 </head>
 <body>
-    <div x-data="{ images: ['image1.png', 'image2.png', 'image3.png'], currentIndex: 0 }" 
+    <!--
+    <div x-data="{ images: ['image1.png', 'image2.png'], currentIndex: 0 }" 
          @wheel="currentIndex = (currentIndex + ($event.deltaY > 0 ? 1 : -1) + images.length) % images.length">
         <img :src="'/images/' + images[currentIndex]" alt="Scrolling Image" style="width: 100%;">
         <p x-text="'Image ' + (currentIndex + 1) + ' of ' + images.length"></p>
     </div>
+    -->
     <script src="/js/app.js"></script>
+    <script>
+      fetch('/api/words')
+        .then(response => response.json())
+        .then(data => {
+          const container = document.createElement('div');
+          data.forEach(word => {
+            const wordDiv = document.createElement('div');
+            wordDiv.innerHTML = `
+              <h2>${word.title}</h2>
+              <p>Thing: ${word.thing}</p>
+              <p>Synonyms: ${word.synonym_01}, ${word.synonym_02}</p>
+              <p>Whatis: ${word.whatis_01}, ${word.whatis_02}</p>
+              <p>Whyuse: ${word.whyuse_01}, ${word.whyuse_02}</p>
+              <p>Whatdo: ${word.whatdo_01}, ${word.whatdo_02}</p>
+              <p>Similes: ${word.simile_01}, ${word.simile_02}</p>
+            `;
+            container.appendChild(wordDiv);
+          });
+          document.body.appendChild(container);
+        });
+    </script>
 </body>
 </html>
