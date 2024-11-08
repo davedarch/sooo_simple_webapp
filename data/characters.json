@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "Frodo Baggins",
+    "universe": "Middle-earth",
+    "abilities": ["Courage", "Stealth", "Ring Bearer"]
+  },
+  {
+    "id": 2,
+    "name": "Harry Potter",
+    "universe": "Wizarding World",
+    "abilities": ["Magic", "Parseltongue", "Courage"]
+  },
+  {
+    "id": 3,
+    "name": "Luke Skywalker",
+    "universe": "Star Wars",
+    "abilities": ["The Force", "Lightsaber Skills", "Piloting"]
+  },
+  {
+    "id": 4,
+    "name": "Wonder Woman",
+    "universe": "DC Universe",
+    "abilities": ["Super Strength", "Flight", "Combat Skills"]
+  }
+]

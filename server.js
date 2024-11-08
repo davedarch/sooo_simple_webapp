@@ -16,9 +16,9 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Route to get all words
-app.get('/api/words', (req, res) => {
-  fs.readFile(path.join(__dirname, 'data', 'words.json'), 'utf8', (err, data) => {
+// Route to get all characters
+app.get('/api/characters', (req, res) => {
+  fs.readFile(path.join(__dirname, 'data', 'characters.json'), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Error reading data');
@@ -27,20 +27,20 @@ app.get('/api/words', (req, res) => {
   });
 });
 
-// Route to add a new word
-app.post('/api/words', (req, res) => {
-  const newWord = req.body;
+// Route to add a new character
+app.post('/api/characters', (req, res) => {
+  const newCharacter = req.body;
 
-  fs.readFile(path.join(__dirname, 'data', 'words.json'), 'utf8', (err, data) => {
+  fs.readFile(path.join(__dirname, 'data', 'characters.json'), 'utf8', (err, data) => {
     if (err) {
       console.error(err);
       return res.status(500).send('Error reading data');
     }
 
-    const words = JSON.parse(data);
-    words.push(newWord);
+    const characters = JSON.parse(data);
+    characters.push(newCharacter);
 
-    fs.writeFile(path.join(__dirname, 'data', 'words.json'), JSON.stringify(words, null, 2), (err) => {
+    fs.writeFile(path.join(__dirname, 'data', 'characters.json'), JSON.stringify(characters, null, 2), (err) => {
       if (err) {
         console.error(err);
         return res.status(500).send('Error writing data');
