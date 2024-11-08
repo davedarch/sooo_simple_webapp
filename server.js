@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const db = require('./db');
+const fs = require('fs');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -18,67 +18,36 @@ app.get('/', (req, res) => {
 
 // Route to get all words
 app.get('/api/words', (req, res) => {
-  const words = db.prepare('SELECT * FROM words').all();
-  res.json(words);
+  fs.readFile(path.join(__dirname, 'data', 'words.json'), 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error reading data');
+    }
+    res.json(JSON.parse(data));
+  });
 });
 
 // Route to add a new word
 app.post('/api/words', (req, res) => {
-  console.log('Received req.body:', req.body);
+  const newWord = req.body;
 
-  const {
-    title,
-    thing,
-    synonym_01,
-    synonym_02,
-    whatis_01,
-    whatis_02,
-    whyuse_01,
-    whyuse_02,
-    whatdo_01,
-    whatdo_02,
-    simile_01,
-    simile_02,
-    thing_img_01,
-    thing_img_02,
-    simile_img_01,
-    simile_img_02
-  } = req.body;
+  fs.readFile(path.join(__dirname, 'data', 'words.json'), 'utf8', (err, data) => {
+    if (err) {
+      console.error(err);
+      return res.status(500).send('Error reading data');
+    }
 
-  const stmt = db.prepare(`
-    INSERT INTO words (
-      title, thing, synonym_01, synonym_02, 
-      whatis_01, whatis_02, whyuse_01, whyuse_02, 
-      whatdo_01, whatdo_02, simile_01, simile_02, 
-      thing_img_01, thing_img_02, simile_img_01, simile_img_02
-    ) VALUES (
-      ?, ?, ?, ?, 
-      ?, ?, ?, ?, 
-      ?, ?, ?, ?, 
-      ?, ?, ?, ?
-    )
-  `);
+    const words = JSON.parse(data);
+    words.push(newWord);
 
-  stmt.run(
-    title,
-    thing,
-    synonym_01,
-    synonym_02,
-    whatis_01,
-    whatis_02,
-    whyuse_01,
-    whyuse_02,
-    whatdo_01,
-    whatdo_02,
-    simile_01,
-    simile_02,
-    thing_img_01,
-    thing_img_02,
-    simile_img_01,
-    simile_img_02
-  );
-
-  res.sendStatus(201);
+    fs.writeFile(path.join(__dirname, 'data', 'words.json'), JSON.stringify(words, null, 2), (err) => {
+      if (err) {
+        console.error(err);
+        return res.status(500).send('Error writing data');
+      }
+      res.sendStatus(201);
+    });
+  });
 });
 
 app.listen(PORT, () => {
