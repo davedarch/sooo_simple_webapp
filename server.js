@@ -5,6 +5,9 @@ const db = require('./db');
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+// Middleware to parse JSON request bodies
+app.use(express.json());
+
 // Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
@@ -13,17 +16,68 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'views', 'index.html'));
 });
 
-// Example route to get all words
+// Route to get all words
 app.get('/api/words', (req, res) => {
   const words = db.prepare('SELECT * FROM words').all();
   res.json(words);
 });
 
-// Example route to add a new word
+// Route to add a new word
 app.post('/api/words', (req, res) => {
-  const { title, thing, synonym_01, synonym_02, whatis_01, whatis_02, whyuse_01, whyuse_02, whatdo_01, whatdo_02, simile_01, simile_02, thing_img_01, thing_img_02, simile_img_01, simile_img_02 } = req.body;
-  const stmt = db.prepare('INSERT INTO words (title, thing, synonym_01, synonym_02, whatis_01, whatis_02, whyuse_01, whyuse_02, whatdo_01, whatdo_02, simile_01, simile_02, thing_img_01, thing_img_02, simile_img_01, simile_img_02) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
-  stmt.run(title, thing, synonym_01, synonym_02, whatis_01, whatis_02, whyuse_01, whyuse_02, whatdo_01, whatdo_02, simile_01, simile_02, thing_img_01, thing_img_02, simile_img_01, simile_img_02);
+  console.log('Received req.body:', req.body);
+
+  const {
+    title,
+    thing,
+    synonym_01,
+    synonym_02,
+    whatis_01,
+    whatis_02,
+    whyuse_01,
+    whyuse_02,
+    whatdo_01,
+    whatdo_02,
+    simile_01,
+    simile_02,
+    thing_img_01,
+    thing_img_02,
+    simile_img_01,
+    simile_img_02
+  } = req.body;
+
+  const stmt = db.prepare(`
+    INSERT INTO words (
+      title, thing, synonym_01, synonym_02, 
+      whatis_01, whatis_02, whyuse_01, whyuse_02, 
+      whatdo_01, whatdo_02, simile_01, simile_02, 
+      thing_img_01, thing_img_02, simile_img_01, simile_img_02
+    ) VALUES (
+      ?, ?, ?, ?, 
+      ?, ?, ?, ?, 
+      ?, ?, ?, ?, 
+      ?, ?, ?, ?
+    )
+  `);
+
+  stmt.run(
+    title,
+    thing,
+    synonym_01,
+    synonym_02,
+    whatis_01,
+    whatis_02,
+    whyuse_01,
+    whyuse_02,
+    whatdo_01,
+    whatdo_02,
+    simile_01,
+    simile_02,
+    thing_img_01,
+    thing_img_02,
+    simile_img_01,
+    simile_img_02
+  );
+
   res.sendStatus(201);
 });
 
